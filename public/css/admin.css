@@ -1,0 +1,83 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  
+  .dashboard {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .header {
+    text-align: center;
+    background: #6200ea;
+    color: #fff;
+    padding: 10px 0;
+  }
+  
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .stat {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  .stat h2 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .stat p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #6200ea;
+  }
+  
+  .sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #5700d0;
+    color: white;
+    padding-top: 20px;
+  }
+  
+  .sidebar a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 10px;
+  }
+  
+  .sidebar a:hover {
+    background-color: #495057;
+  }
+  
+  .content {
+    margin-left: 260px;
+    padding: 20px;
+  }
+  
+  .card-custom {
+    border-radius: 12px;
+  }
+  
+  .chart-container {
+    margin-top: 30px;
+    width: 100%;
+    height: 300px;
+  }
+  

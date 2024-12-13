@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Transporte</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@6.0.0-beta3/css/all.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #a1a1a168, #606365ba);
+      color: #33333339;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      background: #b1b1b3c9;
+      color: rgb(18, 18, 18);
+      padding: 20px 10px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h4 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: rgb(60, 60, 60);
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar button {
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .content {
+      margin-left: 270px;
+      padding: 20px;
+    }
+
+    .navbar-custom {
+      background: #7965ed;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .header h1 {
+      color: #8567f9;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .stat {
+      flex: 1;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .stat h2 {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .stat p {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #4a90e2;
+    }
+
+    canvas {
+      margin-top: 30px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h4 class="text-center">Transporte e Logística</h4>
+    <a href="#">Home</a>
+    <a href="gestaoveic.html">Gestão de Veículos</a>
+    <a href="clientes.html">Gestão de Clientes</a>
+    <a href="gestrotas.html">Gestão de Rotas</a>
+    <a href="cadastro.html">Criar Usuários</a>
+    <a href="statusadm.html">Status de Pedidos</a>
+    <a href="relatorio.html">Relatórios</a>
+    <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="content">
+    <nav class="navbar navbar-custom">
+      <div class="container-fluid">
+        <span class="navbar-brand">Dashboard</span>
+        <button class="btn btn-outline-light" onclick="logout()">Logout</button>
+      </div>
+    </nav>
+
+    <div class="dashboard">
+      <header class="header">
+        <h1>Sistema de Transporte</h1>
+      </header>
+      <div class="stats">
+        <div class="stat" id="clientes-ativos">
+          <h2>Clientes Ativos</h2>
+          <p id="clientesAtivos">0</p>
+        </div>
+        <div class="stat" id="lucro-mensal">
+          <h2>Entrada de Lucro Mensal</h2>
+          <p id="lucroMensal">R$ 0,00</p>
+        </div>
+        <div class="stat" id="entregas-realizadas">
+          <h2>Entregas Realizadas</h2>
+          <p id="entregasRealizadas">0</p>
+        </div>
+      </div>
+      <canvas id="chart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Função para verificar se o usuário está logado
+    function checkLogin() {
+      if (localStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'loguin.html'; // Redireciona para login se não estiver logado
+      }
+    }
+
+    // Exemplo de gráfico
+    const ctx = document.getElementById('chart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
+        datasets: [{
+          label: 'Lucro Mensal',
+          data: [3000, 4000, 3200, 5000, 4500],
+          backgroundColor: '#4a90e2',
+          borderColor: '#1e5cb3',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Função para verificar clientes ativos e financeiro
+    function atualizarDashboard() {
+      const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+      const clientesAtivos = clientes.filter(cliente => cliente.status === 'ativo');
+      const lucroMensal = clientesAtivos.reduce((total, cliente) => total + parseFloat(cliente.lucro || 0), 0);
+      const entregasRealizadas = clientesAtivos.reduce((total, cliente) => total + (cliente.entregas || 0), 0);
+
+      // Atualiza as estatísticas
+      document.getElementById('clientesAtivos').innerText = clientesAtivos.length;
+      document.getElementById('lucroMensal').innerText = `R$ ${lucroMensal.toFixed(2)}`;
+      document.getElementById('entregasRealizadas').innerText = entregasRealizadas;
+
+      // Atualiza o gráfico de lucro
+      chart.data.datasets[0].data = [lucroMensal]; // Aqui você pode customizar os dados do gráfico conforme necessário
+      chart.update();
+    }
+
+    // Função de logout
+    function logout() {
+      localStorage.removeItem('isLoggedIn'); // Remover a sessão do usuário
+      alert("Você saiu do sistema!");
+      window.location.href = 'loguin.html'; // Redireciona para o login
+    }
+
+    // Verifica se o usuário está logado ao carregar a página
+    checkLogin();
+
+    // Atualiza o dashboard com dados do localStorage
+    atualizarDashboard();
+  </script>
+</body>
+</html>

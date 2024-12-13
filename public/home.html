@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transportadora Moderna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background: #444242a1;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: rgba(60, 60, 60, 0.441);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    header img {
+      width: 120px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #470cad;
+    }
+
+    .logout {
+      color: #8b04f9;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      margin-left: 20px;
+    }
+
+    .logout:hover {
+      text-decoration: underline;
+    }
+
+    .banner {
+      height: 100vh;
+      background: url('img/MOVIDOS-ALEVART.png') no-repeat center center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .banner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(79, 76, 76, 0.274);
+      z-index: 1;
+    }
+
+    .banner-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      animation: fadeIn 2s;
+    }
+
+    .banner-content h1 {
+      font-size: 3rem;
+      color: #700be2;
+      text-shadow: 2px 2px 5px rgba(64, 62, 62, 0.423);
+    }
+
+    .banner-content p {
+      font-size: 1.2rem;
+      margin-top: 15px;
+    }
+
+    .banner-content button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-top: 20px;
+      background: #694bf0;
+      color: #635e5e57;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .banner-content button:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #f0c14b;
+      text-transform: uppercase;
+    }
+
+    .services, .benefits {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .card {
+      background: #1e1e1e;
+      border-radius: 10px;
+      width: 300px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card h3 {
+      margin-top: 15px;
+      color: #fff;
+    }
+
+    footer {
+      background: #212020;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        background: rgba(2, 2, 2, 0.949);
+        padding: 20px;
+        display: none;
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #ffffff;
+      }
+
+      .banner-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .services, .benefits {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="img/ALEVA LOGO.png" alt="Logo Transportadora">
+    <nav>
+      <span class="menu-toggle">&#9776;</span>
+      <ul>
+        <li><a href="pedidos.html">Solicite Sua Entrega</a></li>
+        <li><a href="statuspedido.html">Acompanhar Pedidos</a></li>
+        <li><a href="criar.html">Crie Seus Clientes</a></li>
+        <li><a href="calcular.html">Calcule Sua Encomenda</a></li>
+        <li><a href="perfil.html">Perfil</a></li>
+        <span class="logout" onclick="logout()">Sair</span>
+
+      </ul>
+    </nav>
+  </header>
+
+  <div class="banner">
+    <div class="banner-content">
+      
+    </div>
+  </div>
+
+  <section id="servicos">
+    <h2>Nossos Serviços</h2>
+    <div class="services">
+      <div class="card">
+        <img src="img/MOVIDOS-ALEVART.png" alt="Serviço 1">
+        <h3>Transporte Nacional</h3>
+      </div>
+      <div class="card">
+        <img src="img/MOVIDOS-ALEVART.png" alt="Serviço 2">
+        <h3>Logística Internacional</h3>
+      </div>
+    </div>
+  </section>
+
+  <section id="beneficios">
+    <h2>Benefícios</h2>
+    <div class="benefits">
+      <div class="card">
+        <h3>Segurança Garantida</h3>
+        <p>Cargas monitoradas 24h por satélite.</p>
+      </div>
+      <div class="card">
+        <h3>Prazo de Entrega</h3>
+        <p>Garantimos entrega no tempo acordado.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Transportadora Rápido Express - Todos os direitos reservados.</p>
+  </footer>
+  <script>
+    // Alternar menu no modo mobile
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+      document.querySelector('nav ul').classList.toggle('active');
+    });
+  
+    // Função de logout
+    function logout() {
+      localStorage.removeItem('authToken'); // Remove o token de autenticação
+      window.location.href = 'login.html'; // Redireciona para a página de login
+    }
+  
+    // Verificação de autenticação
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('authToken');
+  
+      if (!token) {
+      } else {
+        console.log('Usuário autenticado.');
+      }
+    });
+  </script>
+  
+</body>
+</html>

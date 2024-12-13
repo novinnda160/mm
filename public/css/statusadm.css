@@ -1,0 +1,126 @@
+/* Estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 20px;
+  }
+  
+  header {
+    background-color: #4c4b63;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  /* Seção de pedidos */
+  #pedidos {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  #pedidos h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  #pedidos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .pedido {
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pedido p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  .pedido strong {
+    font-weight: bold;
+  }
+  
+  /* Seção de controle de status */
+  #controle-status {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  #controle-status h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  #controle-status input,
+  #controle-status select,
+  #controle-status button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  #controle-status button {
+    background-color: #4c4b63;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #controle-status button:hover {
+    background-color: #3e3d51;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+  
+    header {
+      padding: 15px;
+    }
+  
+    #pedidos,
+    #controle-status {
+      padding: 15px;
+    }
+  
+    #controle-status input,
+    #controle-status select,
+    #controle-status button {
+      width: 100%;
+    }
+  }
+  

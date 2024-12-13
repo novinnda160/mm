@@ -1,0 +1,129 @@
+
+
+/* Estilos Globais */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Cabeçalho */
+  .header {
+    background-color: #3a3939;
+    padding: 10px 15px;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo-container .logo {
+    width: 100px;
+  }
+  
+  .navbar {
+    display: flex;
+  }
+  
+  .nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .nav-menu li {
+    padding: 5px 10px;
+  }
+  
+  .nav-menu a {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .nav-menu a:hover {
+    color: #7c07ea;
+  }
+  
+  /* Banner */
+  .banner {
+    position: relative;
+    text-align: center;
+  }
+  
+  .banner-img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .banner-text {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  /* Rodapé */
+  .footer {
+    background-color: #3d3d3d;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 12px;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+    }
+  
+    .nav-menu {
+        flex-direction: column;
+    }
+  
+    .nav-menu li {
+        text-align: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .banner-text {
+        font-size: 14px;
+        padding: 8px;
+    }
+  
+    .nav-menu a {
+        font-size: 12px;
+    }
+  }
+  

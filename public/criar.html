@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes - Sistema de Delivery</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/criar.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="img/ALEVA LOGO.png" alt="Logo" width="160" height="60">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="home.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="clientes.html">Clientes</a></li>
+          <li class="nav-item"><a class="nav-link" href="pedidos.html">Fazer Pedidos</a></li>
+          <li class="nav-item"><a class="nav-link" href="pedidosadi.html">Status do Pedido</a></li>
+          <li class="nav-item"><a class="nav-link" href="/">Sair</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h2>Cadastro de Clientes</h2>
+    <form id="registerForm">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome do Cliente</label>
+        <input type="text" class="form-control" id="nome" placeholder="Digite o nome do cliente" required>
+      </div>
+      <div class="mb-3">
+        <label for="cpf" class="form-label">CPF</label>
+        <input type="text" class="form-control" id="cpf" placeholder="Digite o CPF" required>
+      </div>
+      <div class="mb-3">
+        <label for="enderecoEntrega" class="form-label">Endereço de Entrega</label>
+        <input type="text" class="form-control" id="enderecoEntrega" placeholder="Digite o endereço de entrega" required>
+      </div>
+      <div class="mb-3">
+        <label for="enderecoColeta" class="form-label">Endereço de Coleta</label>
+        <input type="text" class="form-control" id="enderecoColeta" placeholder="Digite o endereço de coleta" required>
+      </div>
+      <div class="mb-3">
+        <label for="custoEntrega" class="form-label">Custo de Entrega (R$)</label>
+        <input type="number" step="0.01" class="form-control" id="custoEntrega" placeholder="Digite o custo de entrega" required>
+      </div>
+      <button type="button" class="btn btn-primary" id="registerButton">Registrar Cliente</button>
+    </form>
+  </div>
+
+  <div class="container mt-5">
+    <h2>Clientes Registrados</h2>
+    <table class="table table-striped" id="clientsTable">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Endereço de Entrega</th>
+          <th>Endereço de Coleta</th>
+          <th>Custo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Os clientes serão listados aqui via JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/criar.js" defer></script>
+</body>
+</html>

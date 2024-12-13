@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatórios</title>
+  <link rel="stylesheet" href="css/relatorios.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Gestão de Relatórios</h1>
+    </header>
+
+    <section class="form-section">
+      <h2>Adicionar Novo Relatório</h2>
+      <form id="reportForm">
+        <div class="form-group">
+          <label for="title">Título:</label>
+          <input type="text" id="title" placeholder="Digite o título" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Descrição:</label>
+          <textarea id="description" placeholder="Digite a descrição" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="date">Data:</label>
+          <input type="date" id="date" required>
+        </div>
+        <button type="submit" class="btn">Salvar Relatório</button>
+      </form>
+    </section>
+
+    <section class="report-list-section">
+      <h2>Relatórios Registrados</h2>
+      <div id="reportList" class="report-list"></div>
+    </section>
+  </div>
+
+  <script src="js/relatorio.js"></script>
+</body>
+</html>

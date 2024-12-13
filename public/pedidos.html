@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa de Pedidos</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+    form {
+      padding: 20px;
+      background: #f9f9f9;
+      border-bottom: 1px solid #ddd;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, button {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<form id="pedido-form">
+  <label for="solicitante">Nome do Solicitante</label>
+  <input type="text" id="solicitante" placeholder="Ex: João Silva" required>
+
+  <label for="empresa">Nome da Empresa</label> <!-- Novo campo para o nome da empresa -->
+  <input type="text" id="empresa" placeholder="Ex: Empresa XYZ" required>
+
+  <label for="cpf-cnpj">CPF ou CNPJ</label>
+  <input type="text" id="cpf-cnpj" placeholder="Ex: 123.456.789-00 ou 12.345.678/0001-00" required>
+
+  <label for="email">E-mail</label>
+  <input type="email" id="email" placeholder="Ex: joao@email.com" required>
+
+  <label for="telefone">Telefone</label>
+  <input type="text" id="telefone" placeholder="Ex: (11) 98765-4321" required>
+
+  <label for="endereco-coleta">Endereço de Coleta</label>
+  <input type="text" id="endereco-coleta" placeholder="Ex: Avenida Paulista, São Paulo" required>
+
+  <label for="endereco-destino">Endereço de Destino</label>
+  <input type="text" id="endereco-destino" placeholder="Ex: Praça da Sé, São Paulo" required>
+
+  <label for="distancia">Distância Calculada</label>
+  <input type="text" id="distancia" readonly placeholder="Distância em km">
+
+  <label for="valor">Valor da Entrega</label>
+  <input type="text" id="valor" readonly placeholder="Valor em reais">
+
+  <button type="button" id="calcular">Calcular</button>
+  <button type="button" id="solicitar-entrega" disabled>Solicitar Entrega</button>
+</form>
+
+<div id="map"></div>
+
+<script>
+  const map = L.map('map').setView([-23.55052, -46.633308], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  async function geocodeAddress(address) {
+    const apiKey = '0015fbbb711d4074acf8bc2f66fcfe35';
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(address)}&key=${apiKey}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.results && data.results.length > 0) {
+      return data.results[0].geometry;
+    } else {
+      throw new Error("Endereço não encontrado");
+    }
+  }
+
+  function calcularDistancia(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const rad = Math.PI / 180;
+    const dLat = (lat2 - lat1) * rad;
+    const dLon = (lon2 - lon1) * rad;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(dLon / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  document.getElementById('calcular').addEventListener('click', async () => {
+    const enderecoColeta = document.getElementById('endereco-coleta').value;
+    const enderecoDestino = document.getElementById('endereco-destino').value;
+
+    try {
+      const coletaCoords = await geocodeAddress(enderecoColeta);
+      const destinoCoords = await geocodeAddress(enderecoDestino);
+
+      const distancia = calcularDistancia(coletaCoords.lat, coletaCoords.lng, destinoCoords.lat, destinoCoords.lng).toFixed(2);
+      const valor = (distancia * 1.5).toFixed(2);
+
+      document.getElementById('distancia').value = `${distancia} km`;
+      document.getElementById('valor').value = `R$ ${valor}`;
+      document.getElementById('solicitar-entrega').disabled = false;
+
+      L.marker([coletaCoords.lat, coletaCoords.lng]).addTo(map).bindPopup(`Coleta: ${enderecoColeta}`).openPopup();
+      L.marker([destinoCoords.lat, destinoCoords.lng]).addTo(map).bindPopup(`Destino: ${enderecoDestino}`).openPopup();
+
+      map.fitBounds([[coletaCoords.lat, coletaCoords.lng], [destinoCoords.lat, destinoCoords.lng]]);
+    } catch (err) {
+      alert("Erro ao calcular: " + err.message);
+    }
+  });
+
+  document.getElementById('solicitar-entrega').addEventListener('click', async () => {
+    const solicitante = document.getElementById('solicitante').value;
+    const empresa = document.getElementById('empresa').value; // Captura o nome da empresa
+    const cpfCnpj = document.getElementById('cpf-cnpj').value;
+    const email = document.getElementById('email').value;
+    const telefone = document.getElementById('telefone').value;
+    const distancia = document.getElementById('distancia').value;
+    const valor = document.getElementById('valor').value;
+
+    if (!solicitante || !empresa || !cpfCnpj || !email || !telefone || !distancia || !valor) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    const id = new Date().getTime();
+    const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+    const novoPedido = {
+      id,
+      clientName: solicitante,
+      empresa: empresa, // Inclui o nome da empresa no pedido
+      cpfCnpj: cpfCnpj,
+      email: email,
+      telefone: telefone,
+      pickupAddress: document.getElementById('endereco-coleta').value,
+      deliveryAddress: document.getElementById('endereco-destino').value,
+      deliveryCost: valor,
+      status: 'Pendente', // Status inicial
+    };
+    pedidos.push(novoPedido);
+    localStorage.setItem('pedidos', JSON.stringify(pedidos));
+
+    alert("Pedido solicitado com sucesso!");
+  });
+
+  async function fetchPedidos() {
+    const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+    localStorage.setItem('pedidos', JSON.stringify(pedidos));
+    setTimeout(fetchPedidos, 5000);
+  }
+
+  fetchPedidos();
+</script>
+</body>
+</html>

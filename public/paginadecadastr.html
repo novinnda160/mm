@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de Dados</title>
+  <link rel="stylesheet" href="css/paginadecada.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Logo">
+      <h1>Transportadora Dashboard</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#clientes">Clientes</a></li>
+        <li><a href="#motoboys">Motoboys</a></li>
+        <li><a href="#corridas">Corridas</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Gerenciamento de Clientes -->
+    <section id="clientes">
+      <h2>Gerenciar Clientes</h2>
+      <form id="cliente-form">
+        <input type="text" id="cliente-nome" placeholder="Nome" required>
+        <input type="text" id="cliente-cpf" placeholder="CPF" required>
+        <button type="submit">Adicionar Cliente</button>
+      </form>
+      <ul id="clientes-lista"></ul>
+    </section>
+
+    <!-- Gerenciamento de Motoboys -->
+    <section id="motoboys">
+      <h2>Gerenciar Motoboys</h2>
+      <form id="motoboy-form">
+        <input type="text" id="motoboy-nome" placeholder="Nome" required>
+        <input type="text" id="motoboy-telefone" placeholder="Telefone" required>
+        <button type="submit">Adicionar Motoboy</button>
+      </form>
+      <ul id="motoboys-lista"></ul>
+    </section>
+
+    <!-- Gerenciamento de Corridas -->
+    <section id="corridas">
+      <h2>Gerenciar Corridas</h2>
+      <form id="corrida-form">
+        <select id="corrida-cliente"></select>
+        <select id="corrida-motoboy"></select>
+        <button type="submit">Registrar Corrida</button>
+      </form>
+      <ul id="corridas-lista"></ul>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard">
+      <h2>Dashboard</h2>
+      <div id="clientes-ativos">
+        <h3>Clientes Ativos</h3>
+        <p>0</p>
+      </div>
+      <div id="motoristas-ativos">
+        <h3>Motoboys Ativos</h3>
+        <p>0</p>
+      </div>
+      <div id="corridas-realizadas">
+        <h3>Corridas Realizadas</h3>
+        <p>0</p>
+      </div>
+      <canvas id="chart"></canvas>
+    </section>
+  </main>
+
+  <script src="js/paginadecadas.js" defer></script>
+</body>
+</html>

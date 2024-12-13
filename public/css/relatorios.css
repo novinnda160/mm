@@ -1,0 +1,122 @@
+/* General Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+    color: #4a4a8f;
+  }
+  
+  /* Form Section */
+  .form-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .form-section h2 {
+    margin-bottom: 15px;
+    color: #4a4a8f;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4a4a8f;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #373772;
+  }
+  
+  /* Report List Section */
+  .report-list-section h2 {
+    margin-bottom: 15px;
+    color: #4a4a8f;
+  }
+  
+  .report-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .report-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .report-item h3 {
+    margin: 0 0 5px;
+  }
+  
+  .report-item p {
+    margin: 0;
+  }
+  
+  .report-item .actions {
+    margin-top: 10px;
+  }
+  
+  .actions button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .actions .edit-btn {
+    background-color: #ffa500;
+    color: white;
+  }
+  
+  .actions .delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+  }
+  

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status do Pedido - Cliente</title>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/status.css" rel="stylesheet">
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/meupedido.js" defer></script>
+</head>
+<body>
+  <!-- Menu de Navegação -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="img/ALEVA LOGO.png" alt="Logo" style="width: 160px; height: auto;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="home.html">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pedidos.html">Solicitar Pedido</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="clientes.html">Criar Cliente</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">sair</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <div class="container mt-4">
+    <h1 class="text-center mb-4">Status do Seu Pedido</h1>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Endereço de Coleta</th>
+            <th>Endereço de Entrega</th>
+            <th>Custo</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="pedidosTable">
+          <!-- Linhas dinâmicas de pedidos serão inseridas aqui -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Custom JS -->
+  <script>
+    // Função para renderizar os pedidos na página do cliente
+    function renderPedidosCliente() {
+      const pedidos = JSON.parse(localStorage.getItem('pedidos')) || []; // Obtém os pedidos do localStorage
+
+      const pedidosTable = document.querySelector('#pedidosTable');
+      pedidosTable.innerHTML = ''; // Limpa a tabela antes de renderizar
+
+      pedidos.forEach((pedido) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${pedido.id || 'N/A'}</td>
+          <td>${pedido.clientName || 'N/A'}</td>
+          <td>${pedido.pickupAddress || 'N/A'}</td>
+          <td>${pedido.deliveryAddress || 'N/A'}</td>
+          <td>${pedido.deliveryCost || 'N/A'}</td>
+          <td>${pedido.status || 'N/A'}</td>
+        `;
+        pedidosTable.appendChild(row); // Adiciona a linha na tabela
+      });
+    }
+
+    // Função de polling para verificar periodicamente os pedidos
+    function pollingStatusPedidos() {
+      setInterval(() => {
+        renderPedidosCliente(); // Atualiza a tabela com as informações mais recentes do localStorage
+      }, 5000); // Atualiza a cada 5 segundos
+    }
+
+    // Inicializa a página do cliente ao carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPedidosCliente(); // Renderiza os pedidos na tabela do cliente
+      pollingStatusPedidos(); // Inicia o polling para atualizar o status dos pedidos
+    });
+  </script>
+</body>
+</html>

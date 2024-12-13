@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Usuário</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #ffffff, #646567bd);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #333;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #640fdc;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Cadastro de Usuário</h2>
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="Nome de Usuário" required />
+      <input type="password" id="password" placeholder="Senha" required minlength="8" />
+      <button type="submit">Cadastrar</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Impedir envio do formulário
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Salvar no localStorage
+      const credentials = {
+        username: username,
+        password: password
+      };
+
+      localStorage.setItem('userCredentials', JSON.stringify(credentials));
+
+      // Redirecionar para a página de login após cadastro
+      alert('Cadastro realizado com sucesso!');
+      window.location.href = 'login.html';
+    });
+  </script>
+
+</body>
+</html>
