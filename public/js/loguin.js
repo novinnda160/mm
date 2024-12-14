@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (storedUser && storedUser.password === password) {
           alert(`Bem-vindo, ${storedUser.name}!`);
           sessionStorage.setItem('currentUser', JSON.stringify(storedUser));
-          window.location.href = 'dashboard.html'; // Redireciona para o painel
+          window.location.href = 'adm.html'; // Redireciona para o painel
         } else {
           alert('CPF/CNPJ ou senha inválidos!');
         }

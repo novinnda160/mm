@@ -124,6 +124,19 @@
         document.querySelector('.container').innerHTML = '<h2>Usuário não encontrado. Faça login.</h2>';
       }
     });
+    //
+    // Função para verificar se o usuário está logado
+function verificarLogin() {
+  const usuarioLogado = sessionStorage.getItem('usuarioLogado');
+  if (!usuarioLogado) {
+    // Se não estiver logado, redireciona para a página de login
+    window.location.href = 'login.html';  // Ou a página onde o usuário deve fazer login
+  }
+}
+
+// Chama a função de verificação quando a página é carregada
+document.addEventListener('DOMContentLoaded', verificarLogin);
+
   </script>
 
 </body>

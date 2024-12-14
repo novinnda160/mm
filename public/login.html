@@ -77,7 +77,6 @@
     </form>
 
     <div class="link">
-      <a href="cadastro.html">Ainda não tem conta? Cadastre-se</a>
     </div>
   </div>
 
@@ -92,9 +91,16 @@
       const userData = JSON.parse(localStorage.getItem('userProfile'));
 
       // Verificar se os dados batem
-      if (userData && userData.cpfCnpj === cpfCnpjLogin && userData.password === passwordLogin) {
-        // Redirecionar para o perfil
-        window.location.href = 'profil.html';
+      if (!userData) {
+        alert('Usuário não encontrado. Cadastre-se primeiro.');
+        return;
+      }
+
+      if (userData.cpfCnpj === cpfCnpjLogin && userData.password === passwordLogin) {
+        // Salva que o usuário está logado
+        sessionStorage.setItem('usuarioLogado', JSON.stringify(userData));
+        // Redirecionar para a página home
+        window.location.href = 'home.html';
       } else {
         alert('CPF/CNPJ ou senha incorretos.');
       }

@@ -93,7 +93,7 @@ app.delete('/api/clients/:id', (req, res) => {
   clients = clients.filter(client => client.id !== parseInt(id));
   res.status(204).send();
 });
-//-----------------------------------------------------------------
+//--------------------------------------------------------------------------
 // Rotas de API para entregas
 app.get('/api/entregas', autenticarJWT, (req, res) => res.json(entregas));
 

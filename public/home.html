@@ -14,7 +14,7 @@
     }
 
     body {
-      background: #444242a1;
+      background: #595757c7;
       color: #fff;
       overflow-x: hidden;
     }
@@ -24,7 +24,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 10px;
-      background: rgba(60, 60, 60, 0.441);
+      background: rgba(255, 255, 255, 0.901);
       position: fixed;
       width: 100%;
       z-index: 1000;
@@ -46,7 +46,7 @@
 
     nav ul li a {
       text-decoration: none;
-      color: #ffffff;
+      color: #1a1919;
       font-weight: bold;
       transition: color 0.3s;
     }
@@ -68,7 +68,7 @@
     }
 
     .banner {
-      height: 100vh;
+      height: 80vh;
       background: url('img/MOVIDOS-ALEVART.png') no-repeat center center/cover;
       position: relative;
       display: flex;
@@ -183,7 +183,7 @@
     @media (max-width: 768px) {
       nav ul {
         flex-direction: column;
-        background: rgba(2, 2, 2, 0.949);
+        background: rgba(247, 247, 247, 0.949);
         padding: 20px;
         display: none;
       }
@@ -196,7 +196,7 @@
         display: block;
         font-size: 1.5rem;
         cursor: pointer;
-        color: #ffffff;
+        color: #000000;
       }
 
       .banner-content h1 {
@@ -221,14 +221,13 @@
         <li><a href="calcular.html">Calcule Sua Encomenda</a></li>
         <li><a href="perfil.html">Perfil</a></li>
         <span class="logout" onclick="logout()">Sair</span>
-
       </ul>
     </nav>
   </header>
 
   <div class="banner">
     <div class="banner-content">
-      
+      <!-- Banner Content here -->
     </div>
   </div>
 
@@ -263,6 +262,7 @@
   <footer>
     <p>&copy; 2024 Transportadora Rápido Express - Todos os direitos reservados.</p>
   </footer>
+
   <script>
     // Alternar menu no modo mobile
     document.querySelector('.menu-toggle').addEventListener('click', () => {
@@ -280,11 +280,23 @@
       const token = localStorage.getItem('authToken');
   
       if (!token) {
+        // Adicionar comportamento se o usuário não estiver autenticado
       } else {
         console.log('Usuário autenticado.');
       }
     });
+
+    // Função para verificar se o usuário está logado
+    function verificarLogin() {
+      const usuarioLogado = sessionStorage.getItem('usuarioLogado');
+      if (!usuarioLogado) {
+        // Se não estiver logado, redireciona para a página de login
+        window.location.href = 'login.html';  // Ou a página onde o usuário deve fazer login
+      }
+    }
+
+    // Chama a função de verificação quando a página é carregada
+    document.addEventListener('DOMContentLoaded', verificarLogin);
   </script>
-  
 </body>
 </html>

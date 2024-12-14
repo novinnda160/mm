@@ -20,9 +20,9 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link active" href="home.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="clientes.html">Clientes</a></li>
+          <li class="nav-item"><a class="nav-link" href="criar.html">Clientes</a></li>
           <li class="nav-item"><a class="nav-link" href="pedidos.html">Fazer Pedidos</a></li>
-          <li class="nav-item"><a class="nav-link" href="pedidosadi.html">Status do Pedido</a></li>
+          <li class="nav-item"><a class="nav-link" href="statuspedido.html">Status do Pedido</a></li>
           <li class="nav-item"><a class="nav-link" href="/">Sair</a></li>
         </ul>
       </div>
@@ -69,13 +69,115 @@
           <th>Ações</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="clientsList">
         <!-- Os clientes serão listados aqui via JS -->
       </tbody>
     </table>
   </div>
 
   <!-- Scripts -->
-  <script src="js/criar.js" defer></script>
+  <script>
+    // Função para registrar cliente
+    function registrarCliente() {
+      const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado')); // Recupera o usuário logado
+      if (!usuarioLogado) {
+        alert("Você precisa estar logado para registrar clientes.");
+        return;
+      }
+
+      const nome = document.getElementById('nome').value;
+      const cpf = document.getElementById('cpf').value;
+      const enderecoEntrega = document.getElementById('enderecoEntrega').value;
+      const enderecoColeta = document.getElementById('enderecoColeta').value;
+      const custoEntrega = parseFloat(document.getElementById('custoEntrega').value);
+
+      const novoCliente = {
+        usuarioId: usuarioLogado.id, // Associando o cliente ao usuário logado
+        nome,
+        cpf,
+        enderecoEntrega,
+        enderecoColeta,
+        custoEntrega,
+      };
+
+      // Salvar no localStorage
+      let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+      clientes.push(novoCliente);
+      localStorage.setItem('clientes', JSON.stringify(clientes));
+
+      // Limpar o formulário
+      document.getElementById('registerForm').reset();
+
+      // Atualizar a lista de clientes
+      listarClientes();
+    }
+
+    // Função para listar os clientes do usuário logado
+    function listarClientes() {
+      const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado')); // Recupera o usuário logado
+      const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+      const clientsTable = document.getElementById('clientsList');
+      clientsTable.innerHTML = ''; // Limpa a tabela antes de renderizar
+
+      if (!usuarioLogado) {
+        // Se não houver um usuário logado, mostrar mensagem de erro
+        clientsTable.innerHTML = '<tr><td colspan="6" class="text-center">Nenhum usuário logado.</td></tr>';
+        return;
+      }
+
+      // Filtra os clientes que pertencem ao usuário logado
+      const clientesDoUsuario = clientes.filter(cliente => cliente.usuarioId === usuarioLogado.id);
+
+      if (clientesDoUsuario.length === 0) {
+        clientsTable.innerHTML = '<tr><td colspan="6" class="text-center">Nenhum cliente encontrado para este usuário.</td></tr>';
+      } else {
+        clientesDoUsuario.forEach((cliente) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${cliente.nome || 'N/A'}</td>
+            <td>${cliente.cpf || 'N/A'}</td>
+            <td>${cliente.enderecoEntrega || 'N/A'}</td>
+            <td>${cliente.enderecoColeta || 'N/A'}</td>
+            <td>R$ ${cliente.custoEntrega.toFixed(2) || '0.00'}</td>
+            <td><button onclick="excluirCliente(${clientes.indexOf(cliente)})" class="btn btn-danger">Excluir</button></td>
+          `;
+          clientsTable.appendChild(row);
+        });
+      }
+    }
+
+    // Função para excluir cliente
+    function excluirCliente(index) {
+      const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado')); // Recupera o usuário logado
+      const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+
+      // Verifica se o cliente pertence ao usuário logado antes de excluir
+      if (clientes[index].usuarioId === usuarioLogado.id) {
+        clientes.splice(index, 1); // Remove o cliente do array
+        localStorage.setItem('clientes', JSON.stringify(clientes)); // Atualiza o localStorage
+        listarClientes(); // Recarrega a lista
+      }
+    }
+
+    // Adiciona o evento para registrar o cliente ao botão
+    document.getElementById('registerButton').addEventListener('click', registrarCliente);
+
+    // Chama a função listarClientes ao carregar a página
+    document.addEventListener('DOMContentLoaded', listarClientes);
+
+    //
+    // Função para verificar se o usuário está logado
+function verificarLogin() {
+  const usuarioLogado = sessionStorage.getItem('usuarioLogado');
+  if (!usuarioLogado) {
+    // Se não estiver logado, redireciona para a página de login
+    window.location.href = 'login.html';  // Ou a página onde o usuário deve fazer login
+  }
+}
+
+// Chama a função de verificação quando a página é carregada
+document.addEventListener('DOMContentLoaded', verificarLogin);
+
+  </script>
 </body>
 </html>
