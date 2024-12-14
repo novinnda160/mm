@@ -1,129 +1,125 @@
+/* Estilos Gerais */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 
+header {
+  background-color: #333;
+  padding: 10px 20px;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
 
-/* Estilos Globais */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container .logo {
+  max-width: 150px;
+}
+
+.navbar {
+  display: flex;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.nav-menu li {
+  margin-left: 20px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 10px;
+  transition: background 0.3s;
+}
+
+.nav-menu a:hover {
+  background-color: #444;
+  border-radius: 5px;
+}
+
+/* Ícone de Menu Hamburguer */
+.menu-icon {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+  .navbar {
+    display: none;
   }
-  
-  img {
-    max-width: 100%;
-    height: auto;
+
+  /* Exibindo o ícone do menu hamburguer */
+  .menu-icon {
     display: block;
   }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
+
+  /* Menu no mobile: quando o menu é ativado */
+  .nav-menu.active {
+    display: block;
+    width: 100%;
+    background-color: #333;
+    position: absolute;
+    top: 60px; /* Altura do header */
+    left: 0;
+    padding: 10px 0;
+    z-index: 99; /* Garantir que fique sobre outros elementos */
   }
-  
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Cabeçalho */
-  .header {
-    background-color: #3a3939;
-    padding: 10px 15px;
-  }
-  
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .logo-container .logo {
-    width: 100px;
-  }
-  
-  .navbar {
-    display: flex;
-  }
-  
-  .nav-menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-  }
-  
+
   .nav-menu li {
-    padding: 5px 10px;
-  }
-  
-  .nav-menu a {
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  .nav-menu a:hover {
-    color: #7c07ea;
-  }
-  
-  /* Banner */
-  .banner {
-    position: relative;
+    margin: 10px 0;
     text-align: center;
   }
-  
-  .banner-img {
-    width: 100%;
-    height: auto;
+
+  .nav-menu a {
+    font-size: 1.2rem;
+    padding: 15px;
+    display: block;
   }
-  
-  .banner-text {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+
+  /* Melhorando o ícone de menu (hamburguer) */
+  .menu-icon {
     color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    background: rgba(0, 0, 0, 0.5);
     padding: 10px;
+    background-color: #333;
     border-radius: 5px;
   }
-  
-  /* Rodapé */
-  .footer {
-    background-color: #3d3d3d;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 12px;
-  }
-  
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-    }
-  
-    .nav-menu {
-        flex-direction: column;
-    }
-  
-    .nav-menu li {
-        text-align: center;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .banner-text {
-        font-size: 14px;
-        padding: 8px;
-    }
-  
-    .nav-menu a {
-        font-size: 12px;
-    }
-  }
-  
+}
+
+/* Estilos para o Banner */
+.banner {
+  margin-top: 70px; /* Para dar espaço ao menu fixo */
+  position: relative;
+  text-align: center;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+}
+
+/* Estilos do Footer */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
