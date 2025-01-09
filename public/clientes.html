@@ -68,80 +68,60 @@
     button:hover {
       background-color: #c82333;
     }
-
-    .link {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .link a {
-      color: #8d5fe8;
-      text-decoration: none;
-      font-weight: bold;
-    }
   </style>
 </head>
 <body>
 
   <div class="container">
     <h2>Lista de Clientes</h2>
-
-    <table id="clientsTable">
+    <table>
       <thead>
         <tr>
           <th>Nome</th>
-          <th>CPF</th>
-          <th>Email</th>
+          <th>CPF/CNPJ</th>
+          <th>Endereço</th>
           <th>Telefone</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody id="clientsList">
-        <!-- Os dados dos clientes serão exibidos aqui -->
+        <!-- Lista será preenchida dinamicamente -->
       </tbody>
     </table>
-
-    <div class="link">
-      <a href="index.html">Voltar à página inicial</a>
-    </div>
   </div>
 
   <script>
-    // Função para listar os clientes
     function listarClientes() {
-      const clientes = JSON.parse(localStorage.getItem('clientes')) || [];  // Recupera os clientes do localStorage
-      const clientsTable = document.getElementById('clientsList');
-      clientsTable.innerHTML = ''; // Limpa a tabela antes de renderizar
+      const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+      const clientsList = document.getElementById('clientsList');
+      clientsList.innerHTML = '';
 
-      // Verificar se a lista de clientes está vazia
       if (clientes.length === 0) {
-        clientsTable.innerHTML = '<tr><td colspan="5" class="text-center">Nenhum cliente encontrado.</td></tr>';
+        clientsList.innerHTML = '<tr><td colspan="5" style="text-align:center;">Nenhum cliente encontrado.</td></tr>';
       } else {
         clientes.forEach((cliente, index) => {
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td>${cliente.name || 'N/A'}</td>
-            <td>${cliente.cpfCnpj || 'N/A'}</td>
-            <td>${cliente.email || 'N/A'}</td>
-            <td>${cliente.phone || 'N/A'}</td>
+            <td>${cliente.name}</td>
+            <td>${cliente.cpfCnpj}</td>
+            <td>${cliente.address}</td>
+            <td>${cliente.phone}</td>
             <td>
               <button onclick="excluirCliente(${index})">Excluir</button>
             </td>
           `;
-          clientsTable.appendChild(row);
+          clientsList.appendChild(row);
         });
       }
     }
 
-    // Função para excluir um cliente
     function excluirCliente(index) {
       const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-      clientes.splice(index, 1); // Remove o cliente do array
-      localStorage.setItem('clientes', JSON.stringify(clientes)); // Atualiza o localStorage
-      listarClientes(); // Recarrega a lista
+      clientes.splice(index, 1);
+      localStorage.setItem('clientes', JSON.stringify(clientes));
+      listarClientes();
     }
 
-    // Chama a função listarClientes ao carregar a página
     document.addEventListener('DOMContentLoaded', listarClientes);
   </script>
 

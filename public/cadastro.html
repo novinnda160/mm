@@ -53,6 +53,20 @@
       cursor: pointer;
     }
 
+    .success-message {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .error-message {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #dc3545;
+      font-weight: bold;
+    }
+
     .link {
       margin-top: 10px;
       font-size: 0.9rem;
@@ -80,28 +94,47 @@
       <button type="submit">Cadastrar</button>
     </form>
 
+    <div id="feedback" class="success-message"></div>
     <div class="link">
+      <a href="list.html">Ver Lista de Clientes</a>
     </div>
   </div>
 
   <script>
-    // Função para salvar os dados no localStorage
     document.getElementById('registerForm').addEventListener('submit', function(event) {
       event.preventDefault(); // Evitar envio do formulário
 
       const userData = {
-        name: document.getElementById('name').value,
-        cpfCnpj: document.getElementById('cpfCnpj').value,
-        address: document.getElementById('address').value,
-        phone: document.getElementById('phone').value,
-        rg: document.getElementById('rg').value,
+        name: document.getElementById('name').value.trim(),
+        cpfCnpj: document.getElementById('cpfCnpj').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        rg: document.getElementById('rg').value.trim(),
         password: document.getElementById('password').value
       };
 
-      // Armazenar no localStorage
-      localStorage.setItem('userProfile', JSON.stringify(userData));
+      // Validação básica para garantir que todos os campos estão preenchidos
+      if (Object.values(userData).some(value => value === "")) {
+        document.getElementById('feedback').className = "error-message";
+        document.getElementById('feedback').textContent = "Por favor, preencha todos os campos corretamente.";
+        return;
+      }
 
-      // Redirecionar para a página de login
+      // Recupera a lista de clientes do localStorage ou inicializa como um array vazio
+      const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+
+      // Adiciona o novo cliente à lista
+      clientes.push(userData);
+
+      // Salva a lista atualizada no localStorage
+      localStorage.setItem('clientes', JSON.stringify(clientes));
+
+      // Mostrar mensagem de sucesso
+      document.getElementById('feedback').className = "success-message";
+      document.getElementById('feedback').textContent = "Cadastro realizado com sucesso!";
+
+      // Limpar o formulário
+      document.getElementById('registerForm').reset();
     });
   </script>
 
