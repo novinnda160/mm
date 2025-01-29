@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Gerenciamento de Cupons</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #ffffff, #646567bd);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: white;
+      background-color: #640fdc;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #4e0ba3;
+    }
+
+    .coupon-list {
+      margin-top: 20px;
+    }
+
+    .coupon-list h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #640fdc;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Admin - Gerenciamento de Cupons</h2>
+
+    <div class="input-group">
+      <input type="number" id="discountValue" placeholder="Valor do Desconto (R$)" min="1">
+      <button onclick="gerarCupom()">Gerar Cupom</button>
+    </div>
+
+    <div class="coupon-list">
+      <h3>Cupons Gerados</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Código do Cupom</th>
+            <th>Valor do Desconto (R$)</th>
+          </tr>
+        </thead>
+        <tbody id="couponTable">
+          <!-- Lista de cupons será preenchida dinamicamente -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Armazena cupons localmente
+    let cupons = JSON.parse(localStorage.getItem('cupons')) || [];
+
+    // Função para gerar cupons
+    function gerarCupom() {
+      const discountValue = parseFloat(document.getElementById('discountValue').value);
+      if (!discountValue || discountValue <= 0) {
+        alert("Por favor, insira um valor válido para o desconto.");
+        return;
+      }
+
+      // Gera código aleatório do cupom
+      const cupomCode = 'CUPOM' + Math.random().toString(36).substring(2, 10).toUpperCase();
+
+      // Adiciona novo cupom à lista
+      cupons.push({ code: cupomCode, value: discountValue });
+
+      // Salva cupons no armazenamento local
+      localStorage.setItem('cupons', JSON.stringify(cupons));
+
+      // Atualiza a tabela de cupons
+      atualizarTabelaCupons();
+    }
+
+    // Função para atualizar a tabela de cupons
+    function atualizarTabelaCupons() {
+      const couponTable = document.getElementById('couponTable');
+      couponTable.innerHTML = '';
+
+      cupons.forEach(cupom => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${cupom.code}</td>
+          <td>R$ ${cupom.value.toFixed(2)}</td>
+        `;
+        couponTable.appendChild(row);
+      });
+    }
+
+    // Carrega a tabela ao abrir a página
+    document.addEventListener('DOMContentLoaded', atualizarTabelaCupons);
+  </script>
+
+</body>
+</html>

@@ -12,7 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "backend": "file:",
+    "cors": "^2.8.5",
     "express": "^4.21.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pouchdb": "^9.0.0",
+    "pouchdb-adapter-http": "^9.0.0",
+    "pouchdb-find": "^9.0.0"
   }
 }

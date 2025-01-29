@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Gerenciar Pedidos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #ffffff, #646567bd);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .container h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #333;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #640fdc;
+      color: white;
+    }
+
+    td {
+      background-color: #f9f9f9;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #640fdc;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #4b0fab;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Pedidos Recebidos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Endereço de Partida</th>
+          <th>Endereço de Destino</th>
+          <th>Valor (R$)</th>
+          <th>Status</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody id="ordersList">
+        <!-- Lista será preenchida dinamicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function listarPedidos() {
+      const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+      const ordersList = document.getElementById('ordersList');
+      ordersList.innerHTML = '';
+
+      if (pedidos.length === 0) {
+        ordersList.innerHTML = '<tr><td colspan="7" style="text-align:center;">Nenhum pedido encontrado.</td></tr>';
+      } else {
+        pedidos.forEach((pedido, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${pedido.id}</td>
+            <td>${pedido.clientName}</td>
+            <td>${pedido.pickupAddress}</td>
+            <td>${pedido.deliveryAddress}</td>
+            <td>R$ ${parseFloat(pedido.deliveryCost.replace('R$', '').trim()).toFixed(2)}</td>
+            <td>
+              <select data-index="${index}" class="status-selector">
+                <option value="Pendente" ${pedido.status === "Pendente" ? "selected" : ""}>Pendente</option>
+                <option value="Pago" ${pedido.status === "Pago" ? "selected" : ""}>Pago</option>
+                <option value="Em Atraso" ${pedido.status === "Em Atraso" ? "selected" : ""}>Em Atraso</option>
+              </select>
+            </td>
+            <td>
+              <button data-index="${index}" class="delete-button">Excluir</button>
+            </td>
+          `;
+          ordersList.appendChild(row);
+        });
+      }
+
+      // Adicionar eventos
+      document.querySelectorAll('.status-selector').forEach(selector => {
+        selector.addEventListener('change', atualizarStatus);
+      });
+
+      document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', excluirPedido);
+      });
+    }
+
+    function atualizarStatus(event) {
+      const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+      const index = event.target.dataset.index;
+      const novoStatus = event.target.value;
+
+      if (pedidos[index]) {
+        pedidos[index].status = novoStatus;
+        localStorage.setItem('pedidos', JSON.stringify(pedidos));
+        alert(`Status do pedido ${pedidos[index].id} atualizado para: ${novoStatus}`);
+        listarPedidos();
+      }
+    }
+
+    function excluirPedido(event) {
+      const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
+      const index = event.target.dataset.index;
+
+      if (pedidos[index]) {
+        if (confirm(`Tem certeza de que deseja excluir o pedido ${pedidos[index].id}?`)) {
+          pedidos.splice(index, 1);
+          localStorage.setItem('pedidos', JSON.stringify(pedidos));
+          listarPedidos();
+          alert("Pedido excluído com sucesso!");
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', listarPedidos);
+  </script>
+
+</body>
+</html>

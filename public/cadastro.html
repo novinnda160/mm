@@ -96,7 +96,7 @@
 
     <div id="feedback" class="success-message"></div>
     <div class="link">
-      <a href="list.html">Ver Lista de Clientes</a>
+      Já possui uma conta? <a href="login.html">Faça login aqui</a>.
     </div>
   </div>
 
@@ -120,21 +120,17 @@
         return;
       }
 
-      // Recupera a lista de clientes do localStorage ou inicializa como um array vazio
-      const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-
-      // Adiciona o novo cliente à lista
-      clientes.push(userData);
-
-      // Salva a lista atualizada no localStorage
-      localStorage.setItem('clientes', JSON.stringify(clientes));
+      // Armazenar no localStorage
+      localStorage.setItem('userProfile', JSON.stringify(userData));
 
       // Mostrar mensagem de sucesso
       document.getElementById('feedback').className = "success-message";
-      document.getElementById('feedback').textContent = "Cadastro realizado com sucesso!";
+      document.getElementById('feedback').textContent = "Cadastro realizado com sucesso! Redirecionando para o login...";
 
-      // Limpar o formulário
-      document.getElementById('registerForm').reset();
+      // Redirecionar para a página de login após 2 segundos
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 2000);
     });
   </script>
 

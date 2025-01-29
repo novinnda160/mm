@@ -45,6 +45,7 @@
 <body>
 
 <form id="pedido-form">
+  <!-- Campos do formulário -->
   <label for="solicitante">Nome do Solicitante</label>
   <input type="text" id="solicitante" placeholder="Ex: João Silva" required>
 
@@ -71,6 +72,9 @@
 
   <label for="valor">Valor da Entrega</label>
   <input type="text" id="valor" readonly placeholder="Valor em reais">
+
+  <label for="data-hora">Data e Hora</label>
+  <input type="text" id="data-hora" readonly placeholder="Data e hora do pedido">
 
   <button type="button" id="calcular">Calcular</button>
   <button type="button" id="solicitar-entrega" disabled>Solicitar Entrega</button>
@@ -130,7 +134,7 @@
     }
   });
 
-  document.getElementById('solicitar-entrega').addEventListener('click', async () => {
+  document.getElementById('solicitar-entrega').addEventListener('click', () => {
     const solicitante = document.getElementById('solicitante').value;
     const empresa = document.getElementById('empresa').value;
     const cpfCnpj = document.getElementById('cpf-cnpj').value;
@@ -138,6 +142,9 @@
     const telefone = document.getElementById('telefone').value;
     const distancia = document.getElementById('distancia').value;
     const valor = document.getElementById('valor').value;
+
+    const dataHoraAtual = new Date().toLocaleString("pt-BR");
+    document.getElementById('data-hora').value = dataHoraAtual;
 
     if (!solicitante || !empresa || !cpfCnpj || !email || !telefone || !distancia || !valor) {
       alert("Preencha todos os campos!");
@@ -157,32 +164,13 @@
       deliveryAddress: document.getElementById('endereco-destino').value,
       deliveryCost: valor,
       status: 'Pendente',
+      dataHora: dataHoraAtual
     };
     pedidos.push(novoPedido);
     localStorage.setItem('pedidos', JSON.stringify(pedidos));
 
     alert("Pedido solicitado com sucesso!");
   });
-
-  async function fetchPedidos() {
-    const pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
-    localStorage.setItem('pedidos', JSON.stringify(pedidos));
-    setTimeout(fetchPedidos, 5000);
-  }
-
-  fetchPedidos();
-
-  // Função para verificar se o usuário está logado
-  function verificarLogin() {
-    const usuarioLogado = sessionStorage.getItem('usuarioLogado');
-    if (!usuarioLogado) {
-      // Se não estiver logado, redireciona para a página de login
-      window.location.href = 'login.html';
-    }
-  }
-
-  // Chama a função de verificação quando a página é carregada
-  document.addEventListener('DOMContentLoaded', verificarLogin);
 </script>
 
 </body>
